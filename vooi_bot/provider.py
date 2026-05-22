@@ -38,6 +38,11 @@ class MarketDataProvider(ABC):
     def set_leverage(self, exchange: str, asset: str, leverage: int) -> Any:
         raise NotImplementedError("leverage setting is not supported by this provider")
 
+    def trades(
+        self, exchanges: str | list[str] | None = None, limit: int = 20, cursor: str | None = None
+    ) -> Any:
+        raise NotImplementedError("trade history is not supported by this provider")
+
 
 class VooiMcpProvider(MarketDataProvider):
     def __init__(self, client: McpHttpClient) -> None:
@@ -105,6 +110,16 @@ class VooiMcpProvider(MarketDataProvider):
             {"exchange": exchange, "asset": asset, "leverage": leverage},
         )
 
+    def trades(
+        self, exchanges: str | list[str] | None = None, limit: int = 20, cursor: str | None = None
+    ) -> Any:
+        arguments: dict[str, Any] = {"limit": limit}
+        if exchanges:
+            arguments["exchanges"] = exchanges
+        if cursor:
+            arguments["cursor"] = cursor
+        return self.client.call_tool("get_trades", arguments)
+
 
 class SnapshotProvider(MarketDataProvider):
     def __init__(self, path: str | Path) -> None:
@@ -132,6 +147,16 @@ class SnapshotProvider(MarketDataProvider):
 
     def positions(self) -> list[PositionSnapshot]:
         return [PositionSnapshot.from_api(item) for item in self.raw.get("positions", [])]
+
+    def trades(
+        self, exchanges: str | list[str] | None = None, limit: int = 20, cursor: str | None = None
+    ) -> Any:
+        rows = self.raw.get("trades", [])
+        if isinstance(rows, dict) and "items" in rows:
+            rows = rows.get("items", [])
+        if not isinstance(rows, list):
+            rows = []
+        return {"items": rows[:limit]}
 
 
 def _slippage_from_api(
