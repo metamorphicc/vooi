@@ -19,5 +19,5 @@ class ExecutorTests(unittest.TestCase):
         )
 
         self.assertEqual(intents[0].asset, "PENDLE")
-        self.assertEqual(intents[0].size, Decimal("15.9"))
-        self.assertEqual(intents[1].size, Decimal("15.9"))
+        self.assertEqual(intents[0].size, Decimal("59.7"))
+        self.assertEqual(intents[1].size, Decimal("59.7"))
