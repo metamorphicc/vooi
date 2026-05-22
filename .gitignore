@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.env
+.codex_extracts/
+data/*.sqlite3
+data/*.sqlite3-*
+data/*.jsonl

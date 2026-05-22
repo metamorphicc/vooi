@@ -1,0 +1,40 @@
+[runtime]
+backend = "mcp"
+mcp_url = "https://vooi-api-app.fly.dev/mcp"
+token_env = "VOOI_API_TOKEN"
+database = "data/bot.sqlite3"
+log_file = "data/events.jsonl"
+
+[strategy]
+name = "FundingRegimeRotation"
+min_net_apr = 0.15
+min_volume_24h = 1000000
+target_volume_24h = 5000000
+max_slippage_bps_per_leg = 8
+fee_buffer_bps_round_trip = 8
+min_stability_ratio = 0.35
+max_apr_spike_ratio = 8.0
+max_candidates = 20
+rotation_score_improvement = 1.35
+exit_net_apr = 0.08
+ranking_band_exit = 10
+allowed_exchanges = ["hyperliquid", "lighter"]
+allowed_quote_symbols = ["USDC"]
+allow_alias_assets = false
+blocked_assets = []
+
+[risk]
+quote_size_usd = 40
+min_order_value_usd = 10
+min_margin_buffer_ratio = 1.10
+max_open_positions = 1
+max_leverage = 3
+max_hold_hours = 36
+min_hold_hours = 4
+min_total_available_usd = 30
+kill_switch = false
+allow_live = true
+live_confirmation_phrase = "EXECUTE_LIVE_ORDERS"
+
+[paper]
+close_when_profit_buffer_bps = 15

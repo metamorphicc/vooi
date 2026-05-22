@@ -1,0 +1,166 @@
+{
+  "funding_strategies": [
+    {
+      "asset": "PENDLE",
+      "volume24h": 17261182.36,
+      "apr1h": "0.0000995",
+      "apr24h": "0.002388",
+      "apr7d": "0.016716",
+      "netApr": "0.87162",
+      "grossSpreadHourly": "0.0000995",
+      "longMarketData": {
+        "baseSymbol": "PENDLE",
+        "exchange": "lighter",
+        "fundingRate": "-0.000087",
+        "maxLeverage": 5,
+        "quoteSymbol": "USDC"
+      },
+      "shortMarketData": {
+        "baseSymbol": "PENDLE",
+        "exchange": "hyperliquid",
+        "fundingRate": "0.0000125",
+        "maxLeverage": 5,
+        "quoteSymbol": "USDC"
+      }
+    },
+    {
+      "asset": "WLFI",
+      "volume24h": 12151526.16,
+      "apr1h": "0.00008032",
+      "apr24h": "0.00192768",
+      "apr7d": "0.01349376",
+      "netApr": "0.7036032",
+      "grossSpreadHourly": "0.00008032",
+      "longMarketData": {
+        "baseSymbol": "WLFI",
+        "exchange": "aster",
+        "fundingRate": "-0.00006782",
+        "maxLeverage": 75,
+        "quoteSymbol": "USDT"
+      },
+      "shortMarketData": {
+        "baseSymbol": "WLFI",
+        "exchange": "hyperliquid",
+        "fundingRate": "0.0000125",
+        "maxLeverage": 5,
+        "quoteSymbol": "USDC"
+      }
+    },
+    {
+      "asset": "JTO",
+      "volume24h": 12187850.6,
+      "apr1h": "0.0001960901",
+      "apr24h": "0.0047061624",
+      "apr7d": "0.0329431368",
+      "netApr": "1.717749276",
+      "grossSpreadHourly": "0.0001960901",
+      "longMarketData": {
+        "baseSymbol": "JTO",
+        "exchange": "hyperliquid",
+        "fundingRate": "-0.0002032801",
+        "maxLeverage": 5,
+        "quoteSymbol": "USDC"
+      },
+      "shortMarketData": {
+        "baseSymbol": "JTO",
+        "exchange": "aster",
+        "fundingRate": "-0.00000719",
+        "maxLeverage": 75,
+        "quoteSymbol": "USDT"
+      }
+    },
+    {
+      "asset": "USELESS",
+      "volume24h": 183945.75,
+      "apr1h": "0.0001875",
+      "apr24h": "0.0045",
+      "apr7d": "0.0315",
+      "netApr": "1.6425",
+      "grossSpreadHourly": "0.0001875",
+      "longMarketData": {
+        "baseSymbol": "USELESS",
+        "exchange": "aster",
+        "fundingRate": "0.0000125",
+        "maxLeverage": 50,
+        "quoteSymbol": "USDT"
+      },
+      "shortMarketData": {
+        "baseSymbol": "USELESS",
+        "exchange": "lighter",
+        "fundingRate": "0.0002",
+        "maxLeverage": 3,
+        "quoteSymbol": "USDC"
+      }
+    }
+  ],
+  "slippage": {
+    "lighter:PENDLE:buy": {"slippageBps": "1.1", "fillPct": "100"},
+    "hyperliquid:PENDLE:sell": {"slippageBps": "1.5", "fillPct": "100"},
+    "hyperliquid:JTO:buy": {"slippageBps": "1.2", "fillPct": "100"},
+    "aster:JTO:sell": {"slippageBps": "2.1", "fillPct": "100"},
+    "aster:WLFI:buy": {"slippageBps": "2.4", "fillPct": "100"},
+    "hyperliquid:WLFI:sell": {"slippageBps": "3.0", "fillPct": "100"}
+  },
+  "markets": {
+    "PENDLE": [
+      {
+        "baseSymbol": "PENDLE",
+        "baseDecimals": 1,
+        "priceDecimals": 5,
+        "quoteSymbol": "USDC",
+        "maxLeverage": 5,
+        "exchange": "lighter",
+        "price": "2.5"
+      },
+      {
+        "baseSymbol": "PENDLE",
+        "baseDecimals": 1,
+        "priceDecimals": 5,
+        "quoteSymbol": "USDC",
+        "maxLeverage": 5,
+        "exchange": "hyperliquid",
+        "price": "2.51"
+      }
+    ],
+    "JTO": [
+      {
+        "baseSymbol": "JTO",
+        "baseDecimals": 0,
+        "priceDecimals": 5,
+        "quoteSymbol": "USDC",
+        "maxLeverage": 5,
+        "exchange": "hyperliquid",
+        "price": "0.53702"
+      },
+      {
+        "baseSymbol": "JTO",
+        "baseDecimals": 0,
+        "priceDecimals": 6,
+        "quoteSymbol": "USDT",
+        "maxLeverage": 75,
+        "exchange": "aster",
+        "price": "0.53859671"
+      }
+    ],
+    "WLFI": [
+      {
+        "baseSymbol": "WLFI",
+        "baseDecimals": 0,
+        "priceDecimals": 6,
+        "quoteSymbol": "USDT",
+        "maxLeverage": 75,
+        "exchange": "aster",
+        "price": "0.144"
+      },
+      {
+        "baseSymbol": "WLFI",
+        "baseDecimals": 0,
+        "priceDecimals": 5,
+        "quoteSymbol": "USDC",
+        "maxLeverage": 5,
+        "exchange": "hyperliquid",
+        "price": "0.1441"
+      }
+    ]
+  }
+}

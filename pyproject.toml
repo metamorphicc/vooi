@@ -1,0 +1,10 @@
+[project]
+name = "vooi-funding-carry-bot"
+version = "0.1.0"
+description = "Delta-neutral VOOI perps funding carry bot with paper and guarded live modes."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
