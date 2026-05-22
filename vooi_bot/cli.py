@@ -53,6 +53,12 @@ def main(argv: list[str] | None = None) -> int:
     positions = sub.add_parser("positions", parents=[parent], help="show VOOI open positions")
     positions.add_argument("--json", action="store_true")
 
+    trades = sub.add_parser("trades", parents=[parent], help="show VOOI trade history")
+    trades.add_argument("--exchange", choices=["aster", "hyperliquid", "lighter"], action="append")
+    trades.add_argument("--limit", type=int, default=20)
+    trades.add_argument("--cursor")
+    trades.add_argument("--json", action="store_true")
+
     report = sub.add_parser("report", parents=[parent], help="show closed live-position performance")
     report.add_argument("--json", action="store_true")
     report.add_argument("--scale-usd", nargs="*", default=["500", "1000"])
@@ -124,6 +130,9 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "positions":
             provider = build_provider(cfg)
             return cmd_positions(provider, args.json)
+        if args.command == "trades":
+            provider = build_provider(cfg)
+            return cmd_trades(provider, args.exchange, args.limit, args.cursor, args.json)
         if args.command == "report":
             return cmd_report(cfg, args.json, [Decimal(str(item)) for item in args.scale_usd])
         if args.command == "flatten-position":
@@ -606,6 +615,45 @@ def cmd_positions(provider: MarketDataProvider, json_output: bool) -> int:
             print(f"{row['exchange']} {row['asset']}: size={row['size']}")
     return 0
 
+
+
+def cmd_trades(
+    provider: MarketDataProvider,
+    exchanges: list[str] | None,
+    limit: int,
+    cursor: str | None,
+    json_output: bool,
+) -> int:
+    if limit < 1 or limit > 100:
+        raise ValueError("--limit must be between 1 and 100")
+    selected: str | list[str] | None = None
+    if exchanges:
+        selected = exchanges[0] if len(exchanges) == 1 else exchanges
+
+    raw = provider.trades(exchanges=selected, limit=limit, cursor=cursor)
+    output = raw if isinstance(raw, dict) else {"items": raw}
+
+    if json_output:
+        print(json.dumps(output, indent=2))
+        return 0
+
+    items = output.get("items", []) if isinstance(output, dict) else []
+    next_cursor = output.get("cursor") if isinstance(output, dict) else None
+    if not items:
+        print("No trades returned by VOOI MCP.")
+    else:
+        print(f"Trades returned: {len(items)}")
+        for item in items:
+            exchange = item.get("exchange", "?") if isinstance(item, dict) else "?"
+            asset = item.get("asset") or item.get("symbol") or item.get("market") if isinstance(item, dict) else "?"
+            side = item.get("side", "?") if isinstance(item, dict) else "?"
+            size = item.get("size") or item.get("qty") or item.get("quantity") if isinstance(item, dict) else None
+            price = item.get("price") if isinstance(item, dict) else None
+            ts = item.get("timestamp") or item.get("time") or item.get("createdAt") if isinstance(item, dict) else None
+            print(f"{exchange} {asset} side={side} size={size} price={price} time={ts}")
+    if next_cursor:
+        print(f"next_cursor={next_cursor}")
+    return 0
 
 def cmd_report(cfg: BotConfig, json_output: bool, scale_usd: list[Decimal]) -> int:
     store = StateStore(cfg.runtime.database, cfg.runtime.log_file)

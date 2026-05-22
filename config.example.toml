@@ -24,14 +24,14 @@ allow_alias_assets = false
 blocked_assets = []
 
 [risk]
-quote_size_usd = 40
+quote_size_usd = 150
 min_order_value_usd = 10
 min_margin_buffer_ratio = 1.10
 max_open_positions = 1
-max_leverage = 3
+max_leverage = 2
 max_hold_hours = 36
 min_hold_hours = 4
-min_total_available_usd = 30
+min_total_available_usd = 250
 kill_switch = false
 allow_live = true
 live_confirmation_phrase = "EXECUTE_LIVE_ORDERS"
